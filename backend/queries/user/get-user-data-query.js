@@ -1,0 +1,36 @@
+/* jshint esversion: 11 */
+
+const User = require('models/User.js');  // Assuming you have a Product model
+
+module.exports.getUsersData = async ({ page = 1, limit = 10, username = "", userId = null }) => {
+    try {
+
+        let data, totalPages = 1, totalUsers = 1;
+        
+        if (userId) {
+            data = await User.findById(userId);
+        } else if (username) {
+            data = await User.findOne({ username });
+            console.log("🚀 ~ module.exports.getUsersData= ~ data:", data)
+        }
+        else {
+            const skip = (page - 1) * limit;
+            data = await Product.find()
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit);
+            totalUsers = await User.countDocuments();
+            totalPages = Math.ceil(totalUsers / limit);
+        }
+
+        return {
+            data,
+            currentPage: page,
+            totalPages,
+            totalProducts
+        };
+    } catch (error) {
+        console.error('Error fetching products:', err);
+        return error;
+    }
+};
