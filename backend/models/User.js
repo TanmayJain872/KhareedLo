@@ -9,11 +9,11 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 const UserSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.Number,
-        required: true
+        required: false
     },
     externalUserId: {
         type: mongoose.Schema.Types.String,
-        required: true
+        required: false
     },
     fullName: {
         type: mongoose.Schema.Types.String,
@@ -28,13 +28,13 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true,
     },
-    phoneNumber: {
-        type: mongoose.Schema.Types.Number,
-        required: true,
-    },
+    // phoneNumber: {
+    //     type: mongoose.Schema.Types.Number,
+    //     required: true,
+    // },
     emailId: {
         type: mongoose.Schema.Types.String,
-        required: true,
+        required: false,
     },
     createdBy: {
         type: mongoose.Schema.Types.Number,

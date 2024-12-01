@@ -1,6 +1,6 @@
 /* jshint esversion: 11 */
 
-const User = require('models/User.js');  // Assuming you have a Product model
+const User = require('models/User.js');
 
 module.exports.getUsersData = async ({ page = 1, limit = 10, username = "", userId = null }) => {
     try {
@@ -27,10 +27,10 @@ module.exports.getUsersData = async ({ page = 1, limit = 10, username = "", user
             data,
             currentPage: page,
             totalPages,
-            totalProducts
+            totalUsers
         };
     } catch (error) {
-        console.error('Error fetching products:', err);
+        console.error('Error fetching user data:', error);
         return error;
     }
 };

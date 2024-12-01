@@ -7,7 +7,7 @@ module.exports.createUser = async ({ fullName, username, password, phoneNumber, 
         fullName,
         username,
         password,
-        phoneNumber,
+        // phoneNumber,
         emailId,
         createdBy,
         updatedBy: createdBy

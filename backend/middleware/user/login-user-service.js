@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const GetUserDataQuery = require("queries/user/get-user-data-query.js");
 
 
-module.exports.registerUser = async ({ username, password }) => {
+module.exports.loginUser = async ({ username, password }) => {
     if (!username || !password) {
         return {
             message: "Username and password are required.",
@@ -18,9 +18,10 @@ module.exports.registerUser = async ({ username, password }) => {
     }
 
     try {
-        const user = await GetUserDataQuery.getUser({
+        const queryResult = await GetUserDataQuery.getUsersData({
             username
         });
+        const user = JSON.parse(JSON.stringify(queryResult?.data));
         if (!user) {
             return {
                 message: "Invalid username.",
@@ -38,15 +39,13 @@ module.exports.registerUser = async ({ username, password }) => {
                 error: "BusinessValidationError"
             };
         }
-        const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET, { expiresIn: "3h" });
+        const token = await jwt.sign({ id: user?._id, username: user?.username, password: user?.password }, JWT_SECRET, { expiresIn: "24h" });
         return {
             message: "Login Successful!",
             status: true,
             statusCode: 200,
-            data: {
-                token,
-                ...user
-            }
+            token,
+            data: user
         };
     } catch (error) {
         console.error("🚀 ~ module.exports.registerUser= ~ error:", error);
