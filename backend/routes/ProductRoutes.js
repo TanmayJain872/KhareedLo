@@ -3,13 +3,15 @@
 const express = require("express");
 const router = express.Router();
 
+const authenticateToken = require("utilities/authenticate-token.js");
+
 const CreateProductQuery = require("queries/product/create-product-query.js");
 const UpdateProductQuery = require("queries/product/update-product-query.js");
 const GetProductsDataQuery = require("queries/product/get-products-data-query.js");
 const DeleteProductQuery = require("queries/product/delete-product-query.js");
 
 // POST /api/products
-router.post("/", async (request, response) => {
+router.post("/", authenticateToken, async (request, response) => {
     try {
         console.log("🚀 ~ router.post ~ request.body:", request.body);
         const product = await CreateProductQuery.createProduct(request.body);
@@ -35,7 +37,7 @@ router.get("/:id", async (request, response) => {
 });
 
 // PUT /api/products/:id
-router.put("/:id", async (request, response) => {
+router.put("/:id", authenticateToken, async (request, response) => {
     // const { name, description, category, price, updatedBy } = request.body;
     const product = await UpdateProductQuery.updateProduct({
         productId: request.params.id,
@@ -46,7 +48,7 @@ router.put("/:id", async (request, response) => {
 });
 
 // DELETE /api/products/:id
-router.delete("/:id", async (request, response) => {
+router.delete("/:id", authenticateToken, async (request, response) => {
     const product = await DeleteProductQuery.deleteProduct({ productId: request.params.id });
     if (!product) return response.status(404).send("Product not found");
     response.send("Product deleted");

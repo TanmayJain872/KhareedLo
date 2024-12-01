@@ -10,6 +10,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
 const rateLimit = require("express-rate-limit");
+const cookieParser = require("cookie-parser");
+
 
 const productRoutes = require("routes/ProductRoutes");
 const authRoutes = require("routes/AuthRoutes");
@@ -29,8 +31,13 @@ if (cluster.isPrimary) {
 
     const port = process.env.PORT || 5000;
 
-    app.use(cors());
+    // app.use(cors());
+    app.use(cors({
+        credentials: true,
+        origin: "http://localhost:3000"
+    }));
     app.use(helmet());
+    app.use(cookieParser());
     app.use(Express.json());
 
     // Rate Limiting Configuration
