@@ -11,7 +11,7 @@ const PrimaryHeader = ({ ...props }) => {
     return (
         <header className="flex flex-row items-center justify-between px-4 bg-gray-800 h-12 md:h-14">
             <h1
-                className="text-2xl text-white font-serif"
+                className="text-2xl text-white font-serif cursor-pointer"
                 onClick={() => router.push("/products")}
             >
                 KhareedLo
@@ -19,13 +19,13 @@ const PrimaryHeader = ({ ...props }) => {
             {auth?.username?.length ?
                 <div className="flex flex-row gap-2 md:gap-6 w-fit">
                     <button
-                        className="bg-blue-500 text-white w-28 h-8 rounded-md"
+                        className="bg-blue-500 hover:bg-blue-600 text-white w-28 h-8 rounded-md"
                         onClick={() => router.push("/products/new")}
                     >
                         Add Product
                     </button>
                     <button
-                        className="bg-blue-500 text-white w-16 h-8 rounded-md"
+                        className="bg-blue-500 hover:bg-blue-600 text-white w-16 h-8 rounded-md"
                         onClick={() => {
                             removeAuth();
                             router.push("/login");
@@ -37,7 +37,7 @@ const PrimaryHeader = ({ ...props }) => {
                 </div>
                     :
                 <button
-                    className="bg-blue-500 text-white w-16 h-8 rounded-md"
+                    className="bg-blue-500 hover:bg-blue-600 text-white w-16 h-8 rounded-md"
                     onClick={() => router.push("/login")}
                 >
                     Login

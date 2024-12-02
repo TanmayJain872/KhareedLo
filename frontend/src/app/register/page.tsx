@@ -174,7 +174,7 @@ const Register = () => {
                         required
                     />
                 </div>
-                <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">Register</button>
+                <button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">Register</button>
             </form>
         </div>
     );

@@ -71,13 +71,13 @@ const Login = ({ ...props }) => {
                         required
                     />
                 </div>
-                <button type="submit" className="w-full mb-4 bg-green-500 text-white p-2 rounded">
+                <button type="submit" className="w-full mb-4 bg-green-500 hover:bg-green-600 text-white p-2 rounded">
                     Login
                 </button>
                 <hr className="w-full bg-gray-500"/>
                 <Link href="/register">
                     <button
-                        className="w-full mb-4 bg-blue-500 text-white p-2 rounded"
+                        className="w-full mb-4 bg-blue-500 hover:bg-blue-600 text-white p-2 rounded"
                         type="button"
                     >
                         Register

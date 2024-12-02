@@ -202,7 +202,7 @@ const ProductForm = ({ product }: {
 
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white p-2 rounded mb-4"
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded mb-4"
                     disabled={isLoading}
                 >
                     {isLoading ? "Submitting..." : product ? "Update" : "Add"}
