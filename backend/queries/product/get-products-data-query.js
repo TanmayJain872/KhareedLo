@@ -8,8 +8,7 @@ module.exports.getProductsData = async ({ page = 1, limit = 10, productId = null
         let products, totalPages = 1, totalProducts = 1;
 
         if (productId) {
-            products = await Product.findOne({ productId });
-            console.log("🚀 ~ module.exports.getProductsData= ~ products:", products)
+            products = await Product.findOne({ externalProductId: productId });
         } else {
             const skip = (page - 1) * limit;
             products = await Product.find()

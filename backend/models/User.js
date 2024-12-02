@@ -2,9 +2,7 @@
 
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
-// const autoIncrement = require("mongoose-auto-increment");
 
-// autoIncrement.initialize(mongoose.connection);
 
 const UserSchema = new mongoose.Schema({
     userId: {
@@ -28,10 +26,6 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.String,
         required: true,
     },
-    // phoneNumber: {
-    //     type: mongoose.Schema.Types.Number,
-    //     required: true,
-    // },
     emailId: {
         type: mongoose.Schema.Types.String,
         required: false,
@@ -56,12 +50,6 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-// UserSchema.plugin(autoIncrement.plugin, {
-//     model: "User",
-//     field: "id",
-//     startAt: 1,
-//     incrementBy: 1
-// });
 UserSchema.plugin(AutoIncrement, { inc_field: "userId", start_seq: 1, counter_name: "userCounter" });  
 
 UserSchema.pre("save", function(next) {

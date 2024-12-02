@@ -10,12 +10,12 @@ module.exports.getUsersData = async ({ page = 1, limit = 10, username = "", user
         if (userId) {
             data = await User.findById(userId);
         } else if (username) {
-            data = await User.findOne({ username });
-            console.log("🚀 ~ module.exports.getUsersData= ~ data:", data)
+            data = await User.findOne({ username }).select("-_id");
         }
         else {
             const skip = (page - 1) * limit;
-            data = await Product.find()
+            data = await User.find()
+                .select("-_id -password")
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit);

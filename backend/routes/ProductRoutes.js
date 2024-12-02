@@ -13,45 +13,119 @@ const DeleteProductQuery = require("queries/product/delete-product-query.js");
 // POST /api/products
 router.post("/", authenticateToken, async (request, response) => {
     try {
-        console.log("🚀 ~ router.post ~ request.body:", request.body);
         const product = await CreateProductQuery.createProduct(request.body);
         await product.save();
-        response.status(201).send(product);
+        response.status(201).json({
+            message: "Created Product Successfully!",
+            status: true,
+            statusCode: 201,
+            data: product
+        });
     } catch (error) {
-        response.status(400).send(error);
+        response.status(500).json({
+            error: "InternalServerError",
+            status: false,
+            statusCode: 500,
+            message: "Error in adding a product."
+        });
     }
 });
 
 // GET /api/products
 router.get("/", async (request, response) => {
-    const { page, limit } = request?.query;
-    const products = await GetProductsDataQuery.getProductsData({ page, limit });
-    response.status(200).send(products);
+    try {
+        const { page, limit } = request?.query;
+        const products = await GetProductsDataQuery.getProductsData({ page, limit });
+        response.status(200).json({
+            message: "Successfully fetched Products List!",
+            status: true,
+            statusCode: 200,
+            data: JSON.parse(JSON.stringify(products)),
+        });
+    } catch (error) {
+        return response.status(500).json({
+            error: "InternalServerError",
+            status: false,
+            statusCode: 500,
+            message: "Error in fetching products data."
+        });
+    }
 });
 
 // GET /api/products/:id
 router.get("/:id", async (request, response) => {
-    const product = await GetProductsDataQuery.getProductsData({ productId: request.params.id });
-    if (!product) return response.status(404).send("Product not found!");
-    response.send(product);
+    try {
+        const product = await GetProductsDataQuery.getProductsData({ productId: request.params.id });
+        if (!product) return response.status(404).json({
+            error: "BusinessValidationError",
+            status: false,
+            statusCode: 404,
+            message: "Product not found."
+        });
+        response.send(product);
+    } catch (error) {
+        return response.status(500).json({
+            error: "InternalServerError",
+            status: false,
+            statusCode: 500,
+            message: "Error in fetching a product."
+        });
+    }
 });
 
 // PUT /api/products/:id
 router.put("/:id", authenticateToken, async (request, response) => {
-    // const { name, description, category, price, updatedBy } = request.body;
-    const product = await UpdateProductQuery.updateProduct({
-        productId: request.params.id,
-        ...request.body,
-    });
-    if (!product) return response.status(404).send("Product not found");
-    response.send(product);
+    try {
+        const product = await UpdateProductQuery.updateProduct({
+            productId: request.params.id,
+            ...request.body,
+        });
+        if (!product) return response.status(404).json({
+            error: "BusinessValidationError",
+            status: false,
+            statusCode: 404,
+            message: "Product not found."
+        });
+        response.status(200).json({
+            message: "Updated Product Successfully!",
+            status: true,
+            statusCode: 200,
+            data: product
+        });
+    } catch (error) {
+        return response.status(500).json({
+            error: "InternalServerError",
+            status: false,
+            statusCode: 500,
+            message: "Error in updating a product."
+        });
+    }
 });
 
 // DELETE /api/products/:id
 router.delete("/:id", authenticateToken, async (request, response) => {
-    const product = await DeleteProductQuery.deleteProduct({ productId: request.params.id });
-    if (!product) return response.status(404).send("Product not found");
-    response.send("Product deleted");
+    try {
+        const product = await DeleteProductQuery.deleteProduct({ productId: request.params.id });
+        if (!product) return response.status(404).send({
+            error: "BusinessValidationError",
+            status: false,
+            statusCode: 404,
+            message: "Product not found."
+        });
+        response.status(200).json({
+            message: "Deleted Product Successfully!",
+            status: true,
+            statusCode: 200,
+            data: product
+        });
+    } catch (error) {
+        return response.status(500).json({
+            error: "InternalServerError",
+            status: false,
+            statusCode: 500,
+            message: "Error in deleting a product."
+        });
+    }
 });
 
 module.exports = router;

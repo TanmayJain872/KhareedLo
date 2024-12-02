@@ -2,9 +2,6 @@
 
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
-// const autoIncrement = require("mongoose-auto-increment");
-
-// autoIncrement.initialize(mongoose.connection);
 
 const ProductSchema = new mongoose.Schema({
     productId: {
@@ -29,10 +26,6 @@ const ProductSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Number,
         required: true
     },
-    // category: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true
-    // },
     category: {
         type: mongoose.Schema.Types.String,
         required: true
@@ -62,13 +55,6 @@ const ProductSchema = new mongoose.Schema({
     }
 });
 
-
-// ProductSchema.plugin(autoIncrement.plugin, {
-//     model: "Product",
-//     field: "id",
-//     startAt: 1,
-//     incrementBy: 1
-// });
 
 ProductSchema.plugin(AutoIncrement, { inc_field: "productId", start_seq: 1, counter_name: "productCounter" });
 

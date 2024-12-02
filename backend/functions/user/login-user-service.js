@@ -40,11 +40,12 @@ module.exports.loginUser = async ({ username, password }) => {
             };
         }
         const token = await jwt.sign({ id: user?._id, username: user?.username, password: user?.password }, JWT_SECRET, { expiresIn: "24h" });
+        delete user["password"];
         return {
             message: "Login Successful!",
             status: true,
             statusCode: 200,
-            token,
+            token: `Bearer ${token}`,
             data: user
         };
     } catch (error) {

@@ -2,7 +2,7 @@
 
 const Product = require("models/Product.js");
 
-module.exports.createProduct = async ({ name, description, category, price, createdBy }) => {
+module.exports.createProduct = async ({ name, description, category, price, createdBy = 1 }) => {
     const newProduct = new Product({
         name,
         description,
@@ -11,7 +11,6 @@ module.exports.createProduct = async ({ name, description, category, price, crea
         createdBy,
         updatedBy: createdBy
     });
-    console.log("🚀 ~ module.exports.createProduct= ~ newProduct:", newProduct)
 
     try {
         await newProduct.save();
