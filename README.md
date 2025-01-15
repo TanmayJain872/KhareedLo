@@ -1,2 +1,2 @@
 # KhareedLo
-This project has been created for the second round of the hiring process for the role of Full-Stack Developer at Jasper Colin. It's a basic e-commerce web application created using Next JS, Express JS and MongoDB.
+This is a basic e-commerce platform's administration website which allows products management and user registration & login. Developed using Next.js 15, Express.js and MongoDB.
